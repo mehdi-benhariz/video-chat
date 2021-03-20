@@ -1,6 +1,7 @@
 import "./style.css";
 
-import firebase from "firebase/app";
+// import  firebase from "firebase";
+import firebase from "firebase/app"
 import "firebase/firestore";
 var firebaseConfig = {
   apiKey: "AIzaSyCrKp2SQwcDbCCP9FZOBYhfI_TqFS8mvHA",
@@ -13,7 +14,7 @@ var firebaseConfig = {
   appId: "1:753534320342:web:3cafd2a9f65b1207769377",
 };
 
-if (!firebase.apps.length) {
+if (! firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 const firestore = firebase.firestore();
@@ -42,12 +43,18 @@ const remoteVideo = document.getElementById("remoteVideo");
 const hangupButton = document.getElementById("hangupButton");
 
 // 1. Setup media sources
-
 webcamButton.onclick = async () => {
-  localStream = await navigator.mediaDevices.getUserMedia({
-    video: true,
-    audio: true,
-  });
+  console.log(navigator)
+  try{
+    localStream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
+  }catch(err){
+    console.error(err)
+  }
+
+
   remoteStream = new MediaStream();
 
   // Push tracks from local stream to peer connection
